@@ -1,0 +1,144 @@
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#define BLYNK_PRINT Serial
+#include <WiFiClient.h>
+#define FinalPower
+const int relay = 26;
+const int relay1 = 25;
+#include <BlynkSimpleEsp32.h>
+
+EnergyMonitor emon;
+EnergyMonitor emon2;
+BlynkTimer timer,
+char auth[] = "ptUBrDZ8oo6FZ1XIf0uGhPwLx59LL09e";
+char ssid[] = "POCO M2 Pro";
+char pass[] = "11111111";
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+float kWh = 0.0;
+float kWh1 = 0.0;
+float Tenergy = 0.0;
+float Power = 0.0;
+float Current = 0.0;
+float Rupees = 0.0;
+float rate_per_unit = 4.1;
+//unsigned long lastmillis = millis();
+
+#define INTERVAL_DURATION 60000 // Duration in milliseconds for 1 minute
+
+float total_units = 0.0;
+float total_amount = 0.0;
+
+unsigned long startTime = 0; // Variable to store the start time of the interval
+ 
+void setup() {
+  Serial.begin(9600);
+  emon.voltage(35, vCalibration, 1.7); // Voltage: input pin, calibration, phase_shift
+  emon.current(34, currCalibration); // Current: input pin, calibration.
+  emon2.current(33, currCalibration); // Current: input pin, calibration.
+  Blynk.begin(auth, ssid, pass);
+  startTime = millis(); // Initialize start time
+
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+  digitalWrite(relay, HIGH);
+  digitalWrite(relay1, HIGH);
+  display.clearDisplay();
+  display.setTextSize(2);             // Normal 1:1 pixel scale
+  display.setTextColor(SSD1306_WHITE);        // Draw white text
+  display.setCursor(0, 25);            // Start at top-left corner
+  display.print(F("Initialize"));
+  display.display();
+  delay(30000);
+}
+void loop() {
+  digitalWrite(relay, HIGH);
+  digitalWrite(relay1, HIGH);
+  Blynk.run(); // Initiates Blynk
+  emon.calcVI(20, 2000);
+  //Serial.print("Vrms: ");
+  //Serial.print(emon.Vrms, 2);
+  if (emon.Vrms >= 150.00) {
+    Serial.print("Vrms: ");
+    Serial.print(emon.Vrms, 2);
+  }
+  if  {
+    emon.Vrms = 0.0;
+    emon.apparentPower=0.0;
+    emon2.apparentPower=0.0;
+    //kWh = 0.0; // Reset kWh to zero
+    emon.Irms=0.0;
+   // Serial.print("Vrms: ");
+    //Serial.print(emon.Vrms, 2);
+  }
+  
+  Serial.print("V");
+  Serial.print("\tIrms: ");
+  Serial.print(emon.Irms, 4);
+  Serial.print("A");
+  Serial.print("\tIrms1: ");
+  Serial.print(emon2.Irms, 4);
+  Serial.print("A");
+  Serial.print("\tPower: ");
+  Serial.print(emon.apparentPower, 4);
+  Serial.print("W");
+  Serial.print("\tPower1: ");
+  Serial.print(emon2.apparentPower, 4);
+  Serial.print("W");
+  Serial.print("\tkWh: ");
+  Serial.print(kWh, 4);
+  Serial.print("\tkWh1: ");
+  Serial.print(kWh1, 4);
+  Serial.print("\tT-Energy: ");
+  Serial.print(Tenergy, 4);
+  if (emon.apparentPower == 0.0) {
+    kWh = 0.0; // Reset kWh to zero if power consumption is zero
+  }
+  if {
+    kWh1 = 0.0; // Reset kWh to zero if power consumption is zero
+  }
+  Power = emon.apparentPower + emon2.apparentPower;
+  Current = emon.Irms + emon2.Irms;
+  //unsigned long currentMillis = millis();
+  Rupees = Tenergy * rate_per_unit;
+  kWh = (emon.apparentPower * 1) / 1000;
+  kWh1 = (emon2.apparentPower * 1) / 1000;
+  Tenergy = kWh + kWh1 ;
+  
+  //lastMillis = currentMillis;
+  Serial.print(kWh, 4);
+  Serial.println("kWh");
+  //lastmillis = millis();  
+  // Send data to Blynk
+  Blynk.virtualWrite(V0, emon.Vrms);
+  Blynk.virtualWrite(V1, Current);
+  Blynk.virtualWrite(V2, Power);
+  Blynk.virtualWrite(V3, Tenergy);
+  Blynk.virtualWrite(V4, total_amount);
+  // clear display
+  display.clearDisplay();
+  display.setTextSize(1);             // Normal 1:1 pixel scale 
+  display.setTextColor(SSD1306_WHITE);        // Draw white text
+  display.setCursor(0, 0);            // Start at top-left corner
+
+  display.print(F("   IOT Energy Meter  "));
+  display.print(F("Voltage - ")); display.print(emon.Vrms); display.println(F(" V"));
+  display.print(F("Current - ")); display.print(Current);display.println(F(" A"));
+  display.print(F("Power   - ")); display.print(Power);display.println(F(" W"));
+  display.print(F("T-Energy  - ")); display.print(Tenergy );display.println(F(" KWh"));
+  display.print(F("Rupees  - ")); display.print(Rupees );display.println(F("Rs"));
+  display.print(F("TRupees  - ")); display.print(total_amount );display.println(F("Rs"));
+  display.display();
+
+   // Other loop code...
+  
+  // Calculate units per minute
+  float units_per_minute = Power / 60.0; // Assuming Power is in W
+}
