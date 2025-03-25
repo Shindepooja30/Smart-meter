@@ -60,38 +60,38 @@
             Used Firebase authentication & MongoDB to ensure data
             security.
           
- Why Choose Us?
+       Why Choose Us?
     Smart meters offer a range of benefits for both consumers and energy providers, making them 
     a valuable upgrade from traditional meters.
- Here's a breakdown of the key reasons why someone might choose to use a smart meter:
+       Here's a breakdown of the key reasons why someone might choose to use a smart meter:
 
- Benefits for Consumers:
+       Benefits for Consumers:
 
- Accurate Billing:
- Smart meters eliminate the need for estimated bills by providing real-time, precise energy consumption data.
-  This ensures you only pay for the energy you actually use, reducing the risk of overcharges or billing disputes.
- Enhanced Energy Monitoring and Management:
- Real-time data allows you to track your energy usage patterns, identify high-consumption appliances, and make 
- informed decisions to reduce waste.
- Many smart meters come with in-home displays or mobile apps that provide detailed insights into your energy consumption, 
- empowering you to take control of your energy usage.
+       Accurate Billing:
+       Smart meters eliminate the need for estimated bills by providing real-time, precise energy consumption data.
+        This ensures you only pay for the energy you actually use, reducing the risk of overcharges or billing disputes.
+       Enhanced Energy Monitoring and Management:
+       Real-time data allows you to track your energy usage patterns, identify high-consumption appliances, and make 
+       informed decisions to reduce waste.
+       Many smart meters come with in-home displays or mobile apps that provide detailed insights into your energy consumption, 
+       empowering you to take control of your energy usage.
 
- Potential Cost Savings:
+       Potential Cost Savings:
 
- By understanding your energy usage, you can adopt energy-saving habits and potentially lower your bills.
- Smart meters enable time-of-use tariffs,which offer lower rates during off-peak hours, allowing you to save money by 
- shifting energy-intensive activities to those times.
+       By understanding your energy usage, you can adopt energy-saving habits and potentially lower your bills.
+       Smart meters enable time-of-use tariffs,which offer lower rates during off-peak hours, allowing you to save money by 
+       shifting energy-intensive activities to those times.
 
- Increased Convenience:
- Automatic meter readings eliminate the need for manual readings or scheduled appointments with meter readers.
+       Increased Convenience:
+       Automatic meter readings eliminate the need for manual readings or scheduled appointments with meter readers.
  
- Support for Renewable Energy:
- Smart meters are essential for integrating solar panels and other renewable energy sources into your home, 
- allowing you to accurately track energy generation and feed-in tariffs.
+       Support for Renewable Energy:
+       Smart meters are essential for integrating solar panels and other renewable energy sources into your home, 
+       allowing you to accurately track energy generation and feed-in tariffs.
 
- Branding 
+       Branding 
              Byte Busters
      
- Copyright 
+       Copyright 
     
              ©  SmartWatts. All Rights Reserved.
