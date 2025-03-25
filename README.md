@@ -60,8 +60,9 @@
             Used Firebase authentication & MongoDB to ensure data
             security.
           
-       Why Choose Us?
-    Smart meters offer a range of benefits for both consumers and energy providers, making them 
+ Why Choose Us?
+ 
+             Smart meters offer a range of benefits for both consumers and energy providers, making them 
     a valuable upgrade from traditional meters.
        Here's a breakdown of the key reasons why someone might choose to use a smart meter:
 
